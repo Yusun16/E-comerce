@@ -53,4 +53,32 @@
     height: 100px;
     background-color: #ffffff;
   }
+  .discount-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 300px;
+  
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+  }
+  
+  .toolbar-svg {
+    width: 100%;
+    height: auto;
+  }
   

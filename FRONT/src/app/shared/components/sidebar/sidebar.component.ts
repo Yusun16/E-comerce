@@ -52,10 +52,21 @@ export class SidebarComponent implements OnInit {
   }
 
   calculateTotal() {
+    const descuentosActivos = this.cartService.getDescuentosActivos();
+    const descuentoTemporal = this.cartService.isTemporaryDiscountActive();
+  
     this.total = this.cartItems.reduce((acc, item) => {
-      return acc + item.precio * item.cantidad!;
+      let itemTotal = item.precio * item.cantidad!;
+      if (descuentoTemporal) {
+        itemTotal *= 0.5; // Aplica el 50% de descuento
+      } else if (descuentosActivos) {
+        itemTotal *= 0.9; // Aplica el 10% de descuento
+      }
+      return acc + itemTotal;
     }, 0);
   }
+  
+  
 
   comprar() {
     const orderItems = this.cartItems.map((item) => ({
@@ -79,5 +90,38 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  generateRandomCart() {
+    this.cartService.getAllProducts().subscribe({
+      next: (allProducts) => {
+        if (allProducts.length === 0) {
+          console.warn('No hay productos disponibles para generar un carrito.');
+          return;
+        }
+  
+        const count = Math.min(3, allProducts.length); // Selecciona hasta 3 productos
+        const randomProducts = this.getRandomProducts(allProducts, count);
+  
+        randomProducts.forEach((product) => {
+          this.cartService.addToCart({ ...product, cantidad: 1 });
+        });
+  
+        // Activar descuento temporal
+        this.cartService.enableTemporaryDiscount();
+  
+        this.getCartItems();
+      },
+      error: (err) => {
+        console.error('Error al generar el carrito aleatorio:', err);
+      },
+    });
+  }
+  
+  
+  // Método para seleccionar productos aleatorios
+  private getRandomProducts(products: Products[], count: number): Products[] {
+    const shuffled = [...products].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  }
+  
   
 }

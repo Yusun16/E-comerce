@@ -1,7 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, TemplateRef } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/modules/login/service/login.service';
+import { Descuento, DescuentoService } from '../../service/descuento.service';
 
 
 @Component({
@@ -11,12 +13,19 @@ import { LoginService } from 'src/app/modules/login/service/login.service';
 })
 export class SidenavAdminComponent {
   @ViewChild('sidenav') sidenav!: MatSidenav;
+  @ViewChild('modalTemplate') modalTemplate!: TemplateRef<any>;
 
-  constructor(private loginService: LoginService, private router: Router) { }
+  fechaActual: Date = new Date(); // Fecha actual
+  fechaFinal!: Date; // Fecha final seleccionada
 
-  ngAfterViewInit() {
-    //console.log(this.sidenav); 
-  }
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+    private dialog: MatDialog,
+    private descuentoService: DescuentoService // Inyecta el servicio
+  ) {}
+
+  ngAfterViewInit() {}
 
   toggleSidenav() {
     if (this.sidenav) {
@@ -28,9 +37,37 @@ export class SidenavAdminComponent {
     }
   }
 
-    logout() {
-      this.loginService.logout(); 
-      window.location.reload();    
+  logout() {
+    this.loginService.logout();
+    window.location.reload();
+  }
+
+  openModal() {
+    this.dialog.open(this.modalTemplate, {
+      width: '400px',
+    });
+  }
+
+  enviarFechas() {
+    if (this.fechaFinal) {
+      const nuevoDescuento: Omit<Descuento, 'estado'> = {
+        fechaInicio: this.fechaActual,
+        fechaFin: this.fechaFinal,
+      };
+
+      // Llama al servicio para guardar el descuento
+      this.descuentoService.guardarDescuento(nuevoDescuento).subscribe({
+        next: (data) => {
+          console.log('Descuento guardado:', data);
+          alert('Descuento guardado con éxito.');
+        },
+        error: (err) => {
+          console.error('Error al guardar el descuento:', err);
+          alert('Error al guardar el descuento.');
+        },
+      });
+    } else {
+      alert('Por favor selecciona una fecha final.');
     }
-  
+  }
 }

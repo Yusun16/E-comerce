@@ -1,5 +1,6 @@
 package PruebaT.ecommerce.model;
 
+import PruebaT.ecommerce.security.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -37,5 +38,9 @@ public class Ordenes {
     @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("orden")
     private List<DetalleOrden> detalles;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
 }

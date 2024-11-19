@@ -14,4 +14,5 @@ public class OrdenDTO {
     private Date fecha;
     private Double total;
     private List<DetalleOrden> detalles;
+    private UserDTO user;
 }

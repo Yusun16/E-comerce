@@ -36,6 +36,8 @@ public class User implements UserDetails {
     String lastname;
     @Column(name = "email")
     String email;
+    @Column(name = "frecuencia")
+    Integer frecuencia;
 
     /**
      * Obtiene las autoridades concedidas al usuario.

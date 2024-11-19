@@ -1,13 +1,13 @@
 package PruebaT.ecommerce.security.controller;
 
 
+import PruebaT.ecommerce.security.dto.*;
 import PruebaT.ecommerce.security.service.AuthService;
-import PruebaT.ecommerce.security.dto.AuthResponse;
-import PruebaT.ecommerce.security.dto.LoginRequest;
-import PruebaT.ecommerce.security.dto.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -45,5 +45,10 @@ public class AuthController {
     @PostMapping(value = "register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request){
         return ResponseEntity.ok(authService.register(request));
+    }
+
+    @GetMapping(value = "consultar-usuarios")
+    public List<UserDto> consultUsers(){
+        return authService.consultUsers();
     }
 }

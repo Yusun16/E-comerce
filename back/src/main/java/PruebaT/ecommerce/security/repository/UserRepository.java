@@ -1,8 +1,13 @@
 package PruebaT.ecommerce.security.repository;
 
+import PruebaT.ecommerce.security.dto.UserDto;
+import PruebaT.ecommerce.security.dto.UserResponse;
 import PruebaT.ecommerce.security.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
+import java.awt.print.Pageable;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,5 +29,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
      */
     Optional<User> findByUsername(String username);
 
+    @Query("SELECT u FROM User u ORDER BY u.frecuencia DESC")
+    List<User> findTop5ByOrderByFrecuenciaDesc();
+
+    @Query(value = "select username, firstname, lastname, email, role from users", nativeQuery = true)
+    List<UserDto> consultUsers();
 
 }

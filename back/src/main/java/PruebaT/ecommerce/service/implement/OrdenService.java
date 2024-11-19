@@ -12,15 +12,20 @@ import PruebaT.ecommerce.model.Productos;
 import PruebaT.ecommerce.repository.DetalleOrdenesRepository;
 import PruebaT.ecommerce.repository.OrdenesRepository;
 import PruebaT.ecommerce.repository.ProductosRepository;
+import PruebaT.ecommerce.security.model.User;
+import PruebaT.ecommerce.security.repository.UserRepository;
 import PruebaT.ecommerce.service.IService.IDetalleOrdenService;
 import PruebaT.ecommerce.service.IService.IOrdenService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.awt.print.Pageable;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,6 +54,8 @@ public class OrdenService implements IOrdenService {
 
     @Autowired
     private ProductosRepository productosRepository;
+    @Autowired
+    private UserRepository userRepository;
 
 
     /**
@@ -115,9 +122,23 @@ public class OrdenService implements IOrdenService {
                 detalle.setSubtotal(subtotal);
             }
 
+            // Obtener el ID del usuario desde el token
+            Integer userId = getUserIdFromToken();
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuario no encontrado"));
+
+            // Incrementar la frecuencia del usuario
+            if (user.getFrecuencia() == null) {
+                user.setFrecuencia(1); // Inicializar si es nulo
+            } else {
+                user.setFrecuencia(user.getFrecuencia() + 1); // Incrementar en 1
+            }
+            userRepository.save(user); // Guardar los cambios en la base de datos
+
             Ordenes ordenes = new Ordenes();
             ordenes.setFecha(new Date());
             ordenes.setTotal(total);
+            ordenes.setUser(user); // Asignar el usuario a la orden
 
             // Guardar la orden en la base de datos
             ordenes = ordenesRepository.save(ordenes);
@@ -136,7 +157,6 @@ public class OrdenService implements IOrdenService {
         }
     }
 
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void eliminarOrden(Integer id_orden) {
@@ -151,5 +171,25 @@ public class OrdenService implements IOrdenService {
         }
         // Eliminar la orden
         ordenesRepository.delete(orden);
+    }
+
+    @Override
+    public List<User> findTop5ByOrderByFrecuenciaDesc() {
+        return userRepository.findTop5ByOrderByFrecuenciaDesc();
+    }
+
+    @Override
+    public List<Object[]> findTopProductosMasVendidos() {
+        return detalleOrdenesRepository.findTopProductosMasVendidos();
+    }
+
+
+    public Integer getUserIdFromToken() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof User) {
+            User user = (User) authentication.getPrincipal();
+            return user.getId(); // Obtiene el ID del usuario autenticado
+        }
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuario no autorizado");
     }
 }

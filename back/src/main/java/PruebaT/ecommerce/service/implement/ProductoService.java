@@ -121,5 +121,11 @@ public class ProductoService implements IProductoService {
         return productosRepository.findByPrecioBetween(precioMin, precioMax);
     }
 
+    @Override
+    public Long getTotalActiveProducts() {
+        return productosRepository.countActiveProducts();
+    }
+
+
 
 }

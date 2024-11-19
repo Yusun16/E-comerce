@@ -18,4 +18,5 @@ public class RegisterRequest {
     String lastname;
     String email;
     Role role;
+    Integer frecuencia;
 }

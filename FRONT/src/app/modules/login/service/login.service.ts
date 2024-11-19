@@ -22,6 +22,7 @@ export class LoginService {
       tap((userData) => {
         sessionStorage.setItem("token", userData.token);
         sessionStorage.setItem("role", userData.role); // Almacenar el rol en sessionStorage
+        sessionStorage.setItem("frecuencia", userData.frecuencia); // Almacenar el rol en sessionStorage
         this.currentUserData.next(userData.token);
         this.currentUserLoginOn.next(true);
       }),
@@ -33,6 +34,7 @@ export class LoginService {
   logout(): void {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("role"); // Eliminar el rol al cerrar sesión
+    sessionStorage.removeItem("frecuencia"); // Eliminar el rol al cerrar sesión
     this.currentUserLoginOn.next(false);
   }
 
@@ -64,4 +66,16 @@ export class LoginService {
   getRole(): string | null {
     return sessionStorage.getItem('role'); // Método para obtener el rol desde sessionStorage
   }
+
+  getFrecuencia(): number | null {
+    const frecuencia = sessionStorage.getItem('frecuencia');
+    return frecuencia ? parseInt(frecuencia, 10) : null;
+  }
+
+  updateFrecuencia(newFrecuencia: number): void {
+    sessionStorage.setItem('frecuencia', newFrecuencia.toString());
+    this.currentUserData.next(newFrecuencia.toString());
+  }
+  
+  
 }

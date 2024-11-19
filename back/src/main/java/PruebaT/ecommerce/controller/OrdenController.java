@@ -2,6 +2,7 @@ package PruebaT.ecommerce.controller;
 
 import PruebaT.ecommerce.dto.DetalleOrdenDTO;
 import PruebaT.ecommerce.dto.OrdenDTO;
+import PruebaT.ecommerce.security.model.User;
 import PruebaT.ecommerce.service.implement.OrdenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -73,6 +74,16 @@ public class OrdenController {
     public ResponseEntity<Void> eliminarOrden(@PathVariable int id) {
         ordenService.eliminarOrden(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/top-frecuentes")
+    public List<User> obtenerTop5ClientesPorFrecuencia() {
+        return ordenService.findTop5ByOrderByFrecuenciaDesc();
+    }
+
+    @GetMapping("/top-vendidos")
+    public List<Object[]> findTopProductosMasVendidos() {
+        return ordenService.findTopProductosMasVendidos();
     }
 
 }

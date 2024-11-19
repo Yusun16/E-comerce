@@ -1,5 +1,6 @@
 package PruebaT.ecommerce.security.model;
 
+import PruebaT.ecommerce.model.Auditoria;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,14 +23,9 @@ import java.util.Collections;
 @ToString
 @Builder
 @Table(name = "users")
-public class User implements UserDetails {
+public class User extends Auditoria implements UserDetails {
 
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-    @Column(name = "username")
     String username;
     @Column(name = "password")
     String password;

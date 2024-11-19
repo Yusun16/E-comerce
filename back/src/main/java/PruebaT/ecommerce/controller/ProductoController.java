@@ -133,4 +133,11 @@ public class ProductoController {
         List<Productos> productos = this.productoService.findByPrecioBetween(min, max);
         return ResponseEntity.ok(productos);
     }
+
+    @GetMapping("/producto/estado/true/count")
+    public ResponseEntity<Long> obtenerTotalProductosActivos() {
+        Long totalActivos = productoService.getTotalActiveProducts();
+        return ResponseEntity.ok(totalActivos);
+    }
+
 }

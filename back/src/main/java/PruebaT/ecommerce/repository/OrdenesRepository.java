@@ -2,8 +2,13 @@ package PruebaT.ecommerce.repository;
 
 import PruebaT.ecommerce.model.Ordenes;
 import PruebaT.ecommerce.model.Productos;
+import PruebaT.ecommerce.security.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.awt.print.Pageable;
+import java.util.List;
 
 /**
  * Repositorio para gestionar las operaciones CRUD de la entidad {@link Ordenes}.
@@ -16,4 +21,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
+
 }

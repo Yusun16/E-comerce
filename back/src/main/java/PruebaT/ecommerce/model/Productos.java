@@ -22,7 +22,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Table(name = "productos")
-public class Productos {
+public class Productos extends Auditoria {
 
     public enum categoria {
         Electronicos,
@@ -30,9 +30,6 @@ public class Productos {
         Deportivos
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
-    private Integer id;
 
     @Column(name = "nombre")
     private String nombre;

@@ -30,4 +30,11 @@ public interface DetalleOrdenesRepository extends JpaRepository<DetalleOrden, In
     @Query("SELECT do FROM DetalleOrden do WHERE do.orden.id = :ordenId")
     List<DetalleOrden> findByOrdenId(Integer ordenId);
 
+    @Query("SELECT p.nombre AS productoNombre, COUNT(d.producto.id) AS totalVendido " +
+            "FROM DetalleOrden d " +
+            "JOIN d.producto p " +
+            "GROUP BY p.nombre " +
+            "ORDER BY totalVendido DESC")
+    List<Object[]> findTopProductosMasVendidos();
+
 }

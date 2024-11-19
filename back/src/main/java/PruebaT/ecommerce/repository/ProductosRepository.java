@@ -35,5 +35,6 @@ public interface ProductosRepository extends JpaRepository<Productos, Integer> {
     @Query("SELECT p FROM Productos p WHERE p.precio BETWEEN :precioMin AND :precioMax")
     List<Productos> findByPrecioBetween(@Param("precioMin") Double precioMin, @Param("precioMax") Double precioMax);
 
-
+    @Query("SELECT COUNT(p) FROM Productos p WHERE p.estado = true")
+    Long countActiveProducts();
 }

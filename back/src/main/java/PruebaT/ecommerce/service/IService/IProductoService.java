@@ -15,4 +15,5 @@ public interface IProductoService {
     void eliminarProducto(Integer id_producto);
     List<Productos> findByCategoriaContainingIgnoreCase(String categoria);
     List<Productos> findByPrecioBetween(Double precioMin,Double precioMax);
+    Long getTotalActiveProducts();
 }

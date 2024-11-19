@@ -2,9 +2,7 @@ package PruebaT.ecommerce.security.service;
 
 
 import PruebaT.ecommerce.repository.OrdenesRepository;
-import PruebaT.ecommerce.security.dto.AuthResponse;
-import PruebaT.ecommerce.security.dto.LoginRequest;
-import PruebaT.ecommerce.security.dto.RegisterRequest;
+import PruebaT.ecommerce.security.dto.*;
 import PruebaT.ecommerce.security.model.User;
 import PruebaT.ecommerce.security.repository.UserRepository;
 import PruebaT.ecommerce.service.IService.IOrdenService;
@@ -16,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 /**
  * Servicio para la autenticación y registro de usuarios.
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
  * Utiliza {@link JwtService} para acceder a los servicios de JWT.
  * Utiliza {@link PasswordEncoder} para acceder a los servicios de encriptacion de comparacion de contraseña.
  * Utiliza {@link AuthenticationManager} para acceder a los servicios de manejo de sesion de spring security.
-*
+ *
  * @author German Garzon
  * @version 1.0
  */
@@ -60,6 +60,7 @@ public class AuthService {
         return AuthResponse.builder()
                 .token(token)
                 .role(user.getRole()) // Usar el campo `role` directamente
+                .frecuencia(user.getFrecuencia())
                 .build();
     }
 
@@ -80,10 +81,16 @@ public class AuthService {
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .role(request.getRole())
+                .frecuencia(request.getFrecuencia())
                 .build();
 
         userRepository.save(user);
         return AuthResponse.builder().token(jwtService.getToken(user)).
                 role(user.getRole()).build();
     }
+
+    public List<UserDto> consultUsers(){
+        return userRepository.consultUsers();
+    }
+
 }

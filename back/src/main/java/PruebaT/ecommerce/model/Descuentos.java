@@ -14,11 +14,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 @Table(name ="descuentos")
-public class Descuentos {
+public class Descuentos extends Auditoria {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
 
     @Column(name = "fecha_inicio")
     private LocalDate fechaInicio;

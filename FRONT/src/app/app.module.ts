@@ -18,7 +18,6 @@ import { MatNativeDateModule } from '@angular/material/core';
   declarations: [
     AppComponent,
     LoginComponent,
-    UsuarioComponent,
 
   ],
   imports: [

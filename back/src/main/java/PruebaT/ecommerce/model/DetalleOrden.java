@@ -20,11 +20,8 @@ import lombok.ToString;
 @Data
 @ToString
 @Table(name = "detalle_pedidos")
-public class DetalleOrden {
+public class DetalleOrden extends Auditoria {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
-    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "producto_id", nullable = false)

@@ -3,6 +3,7 @@ import { CartService } from '../../service/cart.service';
 import { Products } from 'src/app/core/models/products.interface';
 import { OrdenService } from 'src/app/modules/orden/service/orden.service';
 import { Subscription } from 'rxjs';
+import { LoginService } from 'src/app/modules/login/service/login.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,7 +19,8 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
-    private ordenService: OrdenService
+    private ordenService: OrdenService,
+    private loginService: LoginService // Inyectar LoginService
   ) {}
 
   ngOnInit(): void {
@@ -54,6 +56,7 @@ export class SidebarComponent implements OnInit {
   calculateTotal() {
     const descuentosActivos = this.cartService.getDescuentosActivos();
     const descuentoTemporal = this.cartService.isTemporaryDiscountActive();
+    const frecuenciaUsuario = this.loginService.getFrecuencia() || 0;
   
     this.total = this.cartItems.reduce((acc, item) => {
       let itemTotal = item.precio * item.cantidad!;
@@ -62,25 +65,37 @@ export class SidebarComponent implements OnInit {
       } else if (descuentosActivos) {
         itemTotal *= 0.9; // Aplica el 10% de descuento
       }
+  
+      console.log(frecuenciaUsuario);
+      // Aplica un descuento adicional del 5% si la frecuencia es >= 5
+      if (frecuenciaUsuario >= 5) {
+        itemTotal *= 0.95; // Aplica el 5% de descuento adicional
+      }
+  
       return acc + itemTotal;
     }, 0);
-  }
-  
-  
+  }  
 
   comprar() {
     const orderItems = this.cartItems.map((item) => ({
-      producto: { id: item.id, },
+      producto: { id: item.id },
       cantidad: item.cantidad,
     }));
 
     console.log(orderItems);
 
     this.ordenService.postOrden(orderItems).subscribe({
-      next: () => {
+      next: (response) => {
         this.cartService.clearCart();
         this.getCartItems();
         this.calculateTotal();
+
+        // Actualizar la frecuencia en el frontend
+        const nuevaFrecuencia = response.frecuencia; // Suponiendo que el backend devuelve la frecuencia actualizada
+        if (nuevaFrecuencia !== undefined) {
+          this.loginService.updateFrecuencia(nuevaFrecuencia); // Método que actualiza la frecuencia en sessionStorage
+        }
+
         window.location.reload();
       },
       error: (err) => {
@@ -97,17 +112,17 @@ export class SidebarComponent implements OnInit {
           console.warn('No hay productos disponibles para generar un carrito.');
           return;
         }
-  
+
         const count = Math.min(3, allProducts.length); // Selecciona hasta 3 productos
         const randomProducts = this.getRandomProducts(allProducts, count);
-  
+
         randomProducts.forEach((product) => {
           this.cartService.addToCart({ ...product, cantidad: 1 });
         });
-  
+
         // Activar descuento temporal
         this.cartService.enableTemporaryDiscount();
-  
+
         this.getCartItems();
       },
       error: (err) => {
@@ -115,13 +130,10 @@ export class SidebarComponent implements OnInit {
       },
     });
   }
-  
-  
+
   // Método para seleccionar productos aleatorios
   private getRandomProducts(products: Products[], count: number): Products[] {
     const shuffled = [...products].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
   }
-  
-  
 }

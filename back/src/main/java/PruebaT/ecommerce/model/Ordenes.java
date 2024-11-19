@@ -24,10 +24,8 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @Table(name = "ordenes")
-public class Ordenes {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
-    private Integer id;
+public class Ordenes extends Auditoria {
+
 
     @Column(name = "fecha")
     private Date fecha;

@@ -16,7 +16,6 @@ export class DetalleOrdenComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.idPedido = params['id'];
-      //console.log(this.idPedido);
     });
 
     this.listDetalleOrder();
@@ -25,7 +24,6 @@ export class DetalleOrdenComponent implements OnInit {
   listDetalleOrder(){
     this.detalleService.getDetalleOrden(this.idPedido).subscribe({
       next: (data) => {
-        //console.log(data);
         this.dataDetalleOrder = data;
       },
       error: (err) => {

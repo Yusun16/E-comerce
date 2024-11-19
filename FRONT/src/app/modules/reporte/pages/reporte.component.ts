@@ -7,10 +7,10 @@ import { ReporteService } from '../service/reporte.service';
   styleUrls: ['./reporte.component.scss'],
 })
 export class ReporteComponent implements OnInit {
-  // Variables para los datos
-  frequentClients: any[] = []; // Clientes frecuentes
-  topSoldProducts: any[] = []; // Productos más vendidos
-  activeProductsCount: number = 0; // Productos activos
+  
+  frequentClients: any[] = [];
+  topSoldProducts: any[] = [];
+  activeProductsCount: number = 0;
 
   constructor(private reporteService: ReporteService) {}
 
@@ -18,10 +18,9 @@ export class ReporteComponent implements OnInit {
     this.loadFrequentClients();
     this.loadTopSoldProducts();
   
-    // Suscribirse al observable de productos activos para actualizaciones en tiempo real
     this.reporteService.activeProductsCount$.subscribe({
       next: (count) => {
-        console.log('Productos activos actualizados:', count); // Verificar la actualización
+        console.log('Productos activos actualizados:', count);
         this.activeProductsCount = count;
       },
       error: (err) => {
@@ -30,8 +29,6 @@ export class ReporteComponent implements OnInit {
     });
   }
   
-
-  // Cargar los 5 clientes más frecuentes
   loadFrequentClients(): void {
     this.reporteService.getFrequentClients().subscribe({
       next: (clients) => {
@@ -43,14 +40,14 @@ export class ReporteComponent implements OnInit {
     });
   }
 
-  // Cargar los 5 productos más vendidos
+  
   loadTopSoldProducts(): void {
     this.reporteService.getTopSoldProducts().subscribe({
       next: (products) => {
-        // Mapear los datos a un formato más estructurado
+        
         this.topSoldProducts = products.map((product: any[]) => ({
-          productoNombre: product[0], // Nombre del producto
-          totalVendido: product[1],   // Total vendido
+          productoNombre: product[0],
+          totalVendido: product[1],
         }));
       },
       error: (err) => {

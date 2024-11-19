@@ -1,27 +1,12 @@
 <div class="container">
   <div class="carrito">
-    <input
-      type="text"
-      [(ngModel)]="searchQuery"
-      (input)="searchProducts()"
-      placeholder="Buscar productos por nombre"
-      class="custom-number-input"
-    />
-    <!-- Selector de categorías -->
-    <select
-      [(ngModel)]="selectedCategory"
-      (change)="filterByCategory()"
-      class="custom-number-input"
-    >
+    <input type="text" [(ngModel)]="searchQuery" (input)="searchProducts()" placeholder="Buscar productos por nombre"
+      class="custom-number-input" />
+    <select [(ngModel)]="selectedCategory" (change)="filterByCategory()" class="custom-number-input">
       <option value="" disabled selected>Seleccionar categoría</option>
       <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
     </select>
-    <!-- Selector de rango de valores -->
-    <select
-      [(ngModel)]="selectedPriceRange"
-      (change)="filterByPriceRange()"
-      class="custom-number-input"
-    >
+    <select [(ngModel)]="selectedPriceRange" (change)="filterByPriceRange()" class="custom-number-input">
       <option value="" disabled selected>Seleccionar rango de precio</option>
       <option *ngFor="let range of priceRanges" [value]="range">{{ range }}</option>
     </select>

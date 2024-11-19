@@ -40,7 +40,6 @@ export class ProductsPageComponent implements OnInit {
 
   searchProducts() {
     if (this.searchQuery.trim()) {
-      // Limpiar los demás filtros
       this.selectedCategory = '';
       this.selectedPriceRange = '';
       
@@ -59,7 +58,6 @@ export class ProductsPageComponent implements OnInit {
 
   filterByCategory() {
     if (this.selectedCategory) {
-      // Limpiar los demás filtros
       this.searchQuery = '';
       this.selectedPriceRange = '';
       
@@ -78,7 +76,6 @@ export class ProductsPageComponent implements OnInit {
 
   filterByPriceRange() {
     if (this.selectedPriceRange) {
-      // Limpiar los demás filtros
       this.searchQuery = '';
       this.selectedCategory = '';
       

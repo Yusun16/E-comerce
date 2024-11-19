@@ -10,7 +10,6 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) {}
 
-  // Método para registrar usuario
   registerUser(userData: any): Observable<any> {
     return this.http.post(this.apiUrl, userData);
   }

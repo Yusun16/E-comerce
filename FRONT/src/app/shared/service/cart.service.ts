@@ -22,12 +22,12 @@ export class CartService {
 
   enableTemporaryDiscount() {
     this.descuentoTemporal = true;
-    this.cartUpdated$.next(); // Notificar que el carrito ha cambiado
+    this.cartUpdated$.next();
 
     setTimeout(() => {
       this.descuentoTemporal = false;
-      this.cartUpdated$.next(); // Notificar que el carrito ha cambiado
-    }, 60000); // 1 minuto
+      this.cartUpdated$.next();
+    }, 60000);
   }
 
   isTemporaryDiscountActive(): boolean {
@@ -74,7 +74,7 @@ export class CartService {
 
     this.http.get<boolean>(url, { headers }).subscribe({
       next: (response: any) => {
-        this.descuentosActivos = response.length > 0; // Verifica si hay descuentos activos
+        this.descuentosActivos = response.length > 0;
       },
       error: (err) => {
         console.error('Error al verificar descuentos:', err);

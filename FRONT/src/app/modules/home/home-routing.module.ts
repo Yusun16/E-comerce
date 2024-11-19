@@ -36,9 +36,6 @@ const routes: Routes = [
 })
 export class HomeRoutingModule { }
 
-/**
- * Función para determinar la redirección inicial basada en el rol.
- */
 function determineRedirectPath(): string {
   const role = sessionStorage.getItem('role'); 
 

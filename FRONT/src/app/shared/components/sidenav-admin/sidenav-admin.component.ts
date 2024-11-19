@@ -15,14 +15,14 @@ export class SidenavAdminComponent {
   @ViewChild('sidenav') sidenav!: MatSidenav;
   @ViewChild('modalTemplate') modalTemplate!: TemplateRef<any>;
 
-  fechaActual: Date = new Date(); // Fecha actual
-  fechaFinal!: Date; // Fecha final seleccionada
+  fechaActual: Date = new Date();
+  fechaFinal!: Date;
 
   constructor(
     private loginService: LoginService,
     private router: Router,
     private dialog: MatDialog,
-    private descuentoService: DescuentoService // Inyecta el servicio
+    private descuentoService: DescuentoService
   ) {}
 
   ngAfterViewInit() {}
@@ -55,7 +55,6 @@ export class SidenavAdminComponent {
         fechaFin: this.fechaFinal,
       };
 
-      // Llama al servicio para guardar el descuento
       this.descuentoService.guardarDescuento(nuevoDescuento).subscribe({
         next: (data) => {
           console.log('Descuento guardado:', data);

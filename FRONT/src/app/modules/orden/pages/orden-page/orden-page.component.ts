@@ -28,7 +28,7 @@ export class OrdenPageComponent implements OnInit {
   }
 
   onOrderDeleted() {
-    this.listOrder(); // Volver a cargar la lista de órdenes
+    this.listOrder();
   }
 
 }

@@ -1,5 +1,3 @@
-
-
 :root {
     --color-1: #1db954;
     --color-2: #323232;
@@ -46,14 +44,12 @@
     opacity: 0.5;
   }
 
-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-/* Estilos para el SVG en el toolbar */
 .toolbar-svg {
-  width: 110%; /* Ajusta el tamaño del SVG según sea necesario */
-  height: 100%; /* Ajusta la altura para mantener la proporción del SVG */
+  width: 110%;
+  height: 100%;
 }
 
 .mdc-card__actions {

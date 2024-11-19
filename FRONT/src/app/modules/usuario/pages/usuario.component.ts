@@ -13,7 +13,7 @@ export class UsuarioComponent implements OnInit {
   successMessage = '';
   errorMessage = '';
 
-  usuarios: any[] = []; // Lista para almacenar los usuarios
+  usuarios: any[] = [];
 
   constructor(private fb: FormBuilder, private usuarioService: UsuarioService) {
     this.userForm = this.fb.group({
@@ -27,7 +27,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUsuarios(); // Llama al método para obtener usuarios al cargar el componente
+    this.getUsuarios();
   }
 
   onSubmit() {
@@ -37,7 +37,7 @@ export class UsuarioComponent implements OnInit {
           this.successMessage = 'Usuario registrado exitosamente';
           this.errorMessage = '';
           this.userForm.reset();
-          this.getUsuarios(); // Actualiza la lista de usuarios después de registrar uno nuevo
+          this.getUsuarios();
         },
         error: () => {
           this.errorMessage = 'Error al registrar usuario. Intente nuevamente.';
@@ -51,11 +51,10 @@ export class UsuarioComponent implements OnInit {
     }
   }
 
-  // Método para obtener usuarios
   getUsuarios() {
     this.usuarioService.getUsers().subscribe({
       next: (data) => {
-        this.usuarios = data.map(({ password, ...rest }) => rest); // Excluye el campo `password`
+        this.usuarios = data.map(({ password, ...rest }) => rest);
         this.errorMessage = '';
       },
       error: () => {

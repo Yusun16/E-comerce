@@ -21,8 +21,8 @@ export class LoginService {
     return this.http.post<any>(environment.api + "/security/login", credentials).pipe(
       tap((userData) => {
         sessionStorage.setItem("token", userData.token);
-        sessionStorage.setItem("role", userData.role); // Almacenar el rol en sessionStorage
-        sessionStorage.setItem("frecuencia", userData.frecuencia); // Almacenar el rol en sessionStorage
+        sessionStorage.setItem("role", userData.role);
+        sessionStorage.setItem("frecuencia", userData.frecuencia);
         this.currentUserData.next(userData.token);
         this.currentUserLoginOn.next(true);
       }),
@@ -33,8 +33,8 @@ export class LoginService {
 
   logout(): void {
     sessionStorage.removeItem("token");
-    sessionStorage.removeItem("role"); // Eliminar el rol al cerrar sesión
-    sessionStorage.removeItem("frecuencia"); // Eliminar el rol al cerrar sesión
+    sessionStorage.removeItem("role");
+    sessionStorage.removeItem("frecuencia");
     this.currentUserLoginOn.next(false);
   }
 
@@ -64,7 +64,7 @@ export class LoginService {
   }
 
   getRole(): string | null {
-    return sessionStorage.getItem('role'); // Método para obtener el rol desde sessionStorage
+    return sessionStorage.getItem('role');
   }
 
   getFrecuencia(): number | null {

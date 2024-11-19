@@ -14,7 +14,6 @@ export class SidenavComponent {
   constructor(private loginService: LoginService, private router: Router) { }
 
   ngAfterViewInit() {
-    //console.log(this.sidenav); 
   }
 
   toggleSidenav() {

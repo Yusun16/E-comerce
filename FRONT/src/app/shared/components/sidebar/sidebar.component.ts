@@ -20,7 +20,7 @@ export class SidebarComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private ordenService: OrdenService,
-    private loginService: LoginService // Inyectar LoginService
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
@@ -61,15 +61,15 @@ export class SidebarComponent implements OnInit {
     this.total = this.cartItems.reduce((acc, item) => {
       let itemTotal = item.precio * item.cantidad!;
       if (descuentoTemporal) {
-        itemTotal *= 0.5; // Aplica el 50% de descuento
+        itemTotal *= 0.5;
       } else if (descuentosActivos) {
-        itemTotal *= 0.9; // Aplica el 10% de descuento
+        itemTotal *= 0.9;
       }
   
       console.log(frecuenciaUsuario);
-      // Aplica un descuento adicional del 5% si la frecuencia es >= 5
+      
       if (frecuenciaUsuario >= 5) {
-        itemTotal *= 0.95; // Aplica el 5% de descuento adicional
+        itemTotal *= 0.95;
       }
   
       return acc + itemTotal;
@@ -90,10 +90,10 @@ export class SidebarComponent implements OnInit {
         this.getCartItems();
         this.calculateTotal();
 
-        // Actualizar la frecuencia en el frontend
-        const nuevaFrecuencia = response.frecuencia; // Suponiendo que el backend devuelve la frecuencia actualizada
+        
+        const nuevaFrecuencia = response.frecuencia;
         if (nuevaFrecuencia !== undefined) {
-          this.loginService.updateFrecuencia(nuevaFrecuencia); // Método que actualiza la frecuencia en sessionStorage
+          this.loginService.updateFrecuencia(nuevaFrecuencia);
         }
 
         window.location.reload();
@@ -113,14 +113,14 @@ export class SidebarComponent implements OnInit {
           return;
         }
 
-        const count = Math.min(3, allProducts.length); // Selecciona hasta 3 productos
+        const count = Math.min(3, allProducts.length);
         const randomProducts = this.getRandomProducts(allProducts, count);
 
         randomProducts.forEach((product) => {
           this.cartService.addToCart({ ...product, cantidad: 1 });
         });
 
-        // Activar descuento temporal
+        
         this.cartService.enableTemporaryDiscount();
 
         this.getCartItems();
@@ -131,7 +131,7 @@ export class SidebarComponent implements OnInit {
     });
   }
 
-  // Método para seleccionar productos aleatorios
+  
   private getRandomProducts(products: Products[], count: number): Products[] {
     const shuffled = [...products].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);

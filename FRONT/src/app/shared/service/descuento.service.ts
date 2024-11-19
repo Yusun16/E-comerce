@@ -15,7 +15,7 @@ export interface Descuento {
   providedIn: 'root',
 })
 export class DescuentoService {
-  private apiUrl = `${environment.api}/descuento`; // URL base del endpoint de descuentos
+  private apiUrl = `${environment.api}/descuento`;
 
   constructor(private http: HttpClient, private authService: LoginService) {}
 
@@ -27,10 +27,9 @@ export class DescuentoService {
     });
   }
 
-  // Método para guardar un nuevo descuento
   guardarDescuento(descuento: Omit<Descuento, 'estado'>): Observable<Descuento> {
     const headers = this.getAuthHeaders();
-    const descuentoConEstado = { ...descuento, estado: true }; // Estado por defecto en true
+    const descuentoConEstado = { ...descuento, estado: true };
     return this.http.post<Descuento>(`${this.apiUrl}s`, descuentoConEstado, { headers });
   }
 }

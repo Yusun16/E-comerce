@@ -65,7 +65,6 @@ export class SidebarComponent implements OnInit {
       } else if (descuentosActivos) {
         itemTotal *= 0.9;
       }
-  
       console.log(frecuenciaUsuario);
       
       if (frecuenciaUsuario >= 5) {
@@ -89,8 +88,6 @@ export class SidebarComponent implements OnInit {
         this.cartService.clearCart();
         this.getCartItems();
         this.calculateTotal();
-
-        
         const nuevaFrecuencia = response.frecuencia;
         if (nuevaFrecuencia !== undefined) {
           this.loginService.updateFrecuencia(nuevaFrecuencia);

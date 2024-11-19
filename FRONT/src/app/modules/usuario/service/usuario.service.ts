@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environment/enviroment'; // Ajusta esta ruta según tu proyecto
+import { environment } from 'src/environment/enviroment';
 import { LoginService } from 'src/app/modules/login/service/login.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsuarioService {
-  private apiUrl = `${environment.api}/security`; // URL base del endpoint de usuarios
+  private apiUrl = `${environment.api}/security`;
 
   constructor(private http: HttpClient, private authService: LoginService) {}
 
-  // Método para obtener los headers con el token de autorización
   private getAuthHeaders(): HttpHeaders {
     const token = this.authService.getuserToken();
     return new HttpHeaders({
@@ -26,13 +25,11 @@ export class UsuarioService {
     return this.http.post(`${this.apiUrl}/register`, userData, { headers });
   }
 
-  // Método para obtener usuarios
   getUsers(): Observable<any[]> {
     const headers = this.getAuthHeaders();
     return this.http.get<any[]>(`${this.apiUrl}/consultar-usuarios`, { headers });
   }
 
-  // Método para actualizar usuario
   updateUser(id: number, userData: any): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.put(`${this.apiUrl}/modificar-usuario/${id}`, userData, { headers });

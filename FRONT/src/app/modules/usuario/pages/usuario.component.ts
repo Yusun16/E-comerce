@@ -78,7 +78,6 @@ export class UsuarioComponent implements OnInit {
           },
         });
       } else {
-        // Crear nuevo usuario
         this.usuarioService.registerUser(userData).subscribe({
           next: (response) => {
             console.log('Respuesta completa del servidor:', response); 

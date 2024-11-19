@@ -40,7 +40,6 @@ export class ReporteComponent implements OnInit {
     });
   }
 
-  
   loadTopSoldProducts(): void {
     this.reporteService.getTopSoldProducts().subscribe({
       next: (products) => {

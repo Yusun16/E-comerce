@@ -1,5 +1,7 @@
 package PruebaT.ecommerce.security.dto;
 
+
+import PruebaT.ecommerce.security.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,4 +17,5 @@ public class RegisterRequest {
     String firstname;
     String lastname;
     String email;
+    Role role;
 }

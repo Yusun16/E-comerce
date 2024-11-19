@@ -111,4 +111,15 @@ public class ProductoService implements IProductoService {
         productosRepository.deleteById(id_producto);
     }
 
+    @Override
+    public List<Productos> findByCategoriaContainingIgnoreCase(String categoria) {
+        return productosRepository.findByCategoriaContainingIgnoreCase(categoria);
+    }
+
+    @Override
+    public List<Productos> findByPrecioBetween(Double precioMin, Double precioMax) {
+        return productosRepository.findByPrecioBetween(precioMin, precioMax);
+    }
+
+
 }

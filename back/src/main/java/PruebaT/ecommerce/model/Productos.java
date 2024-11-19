@@ -24,8 +24,11 @@ import lombok.ToString;
 @Table(name = "productos")
 public class Productos {
 
-    public enum categoria {Electrónicos,Alimentos,
-        Deportivos}
+    public enum categoria {
+        Electronicos,
+        Alimentos,
+        Deportivos
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
@@ -46,6 +49,7 @@ public class Productos {
     @Column(name = "precio")
     private Double precio;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "categoria")
     private categoria categoria;
 

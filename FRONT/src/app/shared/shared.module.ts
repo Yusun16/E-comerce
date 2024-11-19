@@ -11,6 +11,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog/confirm-delete-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { SidenavAdminComponent } from './components/sidenav-admin/sidenav-admin.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     TableDetalleOrderComponent,
     SidebarComponent,
     ConfirmDeleteDialogComponent,
+    SidenavAdminComponent,
 
   ],
   imports: [

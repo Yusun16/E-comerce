@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * Utiliza {@link ModelMapper} para convertir entre entidades y DTOs.
  * Utiliza {@link OrdenesRepository} para acceder a la informacion y ajsutes del repositorio.
  *
- * @author German Garzon
+ * @author Roberto Cerquera
  * @version 1.0
  */
 @Service

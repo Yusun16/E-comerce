@@ -15,7 +15,7 @@ import java.util.List;
  * Contiene información relacionada con la fecha de la orden,
  * el total de la compra, y los detalles de la orden.
  *
- * @author German Garzon
+ * @author Roberto Cerquera
  * @version 1.0
  */
 @Entity

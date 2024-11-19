@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * Controlador para manejar solicitudes relacionadas con la autenticación.
  * Proporciona endpoints para el inicio de sesión y el registro de usuarios.
  *
- * @author German Garzon
+ * @author Roberto Cerquera
  * @version 1.0
  */
 @RestController

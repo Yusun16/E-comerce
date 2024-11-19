@@ -1,9 +1,12 @@
 package PruebaT.ecommerce.service.implement;
 
 import PruebaT.ecommerce.dto.DescuentosDTO;
+import PruebaT.ecommerce.dto.DetalleOrdenDTO;
 import PruebaT.ecommerce.model.Descuentos;
 import PruebaT.ecommerce.repository.DescuentosRepository;
+import PruebaT.ecommerce.repository.DetalleOrdenesRepository;
 import PruebaT.ecommerce.service.IService.IDescuentosService;
+import PruebaT.ecommerce.service.IService.IDetalleOrdenService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -13,6 +16,16 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Servicio para gestionar las operaciones relacionadas con los descuentos.
+ * Implementa la interfaz {@link IDescuentosService} para proporcionar la lógica de negocio.
+ *
+ * Utiliza {@link ModelMapper} para convertir entre entidades y DTOs.
+ * Utiliza {@link DescuentosRepository} para acceder a la informacion y ajsutes del repositorio.
+ *
+ * @author Roberto Cerquera
+ * @version 1.0
+ */
 @Service
 public class DescuentosService implements IDescuentosService {
 
@@ -22,6 +35,12 @@ public class DescuentosService implements IDescuentosService {
     @Autowired
     private DescuentosRepository descuentosRepository;
 
+    /**
+     * Lista los descuentos.
+     *
+     *
+     * @return una lista de {@link DescuentosDTO}.
+     */
     @Override
     public List<DescuentosDTO> listarDescuentos() {
         var descuentos = this.descuentosRepository.findAll();
@@ -30,28 +49,44 @@ public class DescuentosService implements IDescuentosService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Guarda un nuevo descuento en el sistema.
+     *
+     * @param descuentos el objeto DescuentosDTO a guardar.
+     * @return el objeto DescuentosDTO guardado.
+     */
     @Override
     public Descuentos guardarDescuento(Descuentos descuentos) {
-
         return descuentosRepository.save(modelMapper.map(descuentos, Descuentos.class));
     }
 
+    /**
+     * Obtiene los descuentos por estado.
+     *
+     * Se lista el descuento y verifica si está activo, por medio de la fecha.
+     * @return la fecha fin para evaluar el estado del descuento.
+     */
     @Override
     public List<Descuentos> obtenerDescuentosActivos() {
         LocalDate fechaActual = LocalDate.now();
         return descuentosRepository.findByFechaFinAfterAndEstadoTrue(fechaActual);
     }
 
-    //Cronometro en un periodo de tiempo(30 minutes)
+    /**
+     * Verifica el estado del descuento por un periodo de tiempo.
+     *
+     * Se lista el descuento y verifica si está activo, por medio de la fecha.
+     * Se evalua el estado del descuento y se guarda.
+     *
+     * Se hace pruebas, para corroborar la expiración del descuento.
+     */
     @Scheduled(cron = "*/10 * * * * ?")
     public void verificarDescuentosExpirados() {
-        // Obtener la fecha en la que se activo
+
         LocalDate fechaActual = LocalDate.now();
 
-        // Buscar todos los descuentos en la fechaFin es anterior a la fecha actual y están activos
         List<Descuentos> descuentosExpirados = descuentosRepository.findByFechaFinBeforeAndEstadoTrue(fechaActual);
 
-        // Actualizar el estado de estos descuentos a falso
         for (Descuentos descuento : descuentosExpirados) {
             descuento.setEstado(false);
             descuentosRepository.save(descuento);

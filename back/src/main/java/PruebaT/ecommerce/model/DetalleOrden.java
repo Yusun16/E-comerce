@@ -11,7 +11,7 @@ import lombok.ToString;
  * y contiene información como la cantidad comprada, el precio por unidad
  * y el subtotal.
  *
- * @author German Garzon
+ * @author Roberto Cerquera
  * @version 1.0
  */
 @Entity

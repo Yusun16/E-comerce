@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
  * Utiliza {@link PasswordEncoder} para acceder a los servicios de encriptacion de comparacion de contraseña.
  * Utiliza {@link AuthenticationManager} para acceder a los servicios de manejo de sesion de spring security.
 *
- * @author German Garzon
+ * @author Roberto Cerquera
  * @version 1.0
  */
 @Service
@@ -44,27 +44,21 @@ public class AuthService {
      * @return un AuthResponse con el token JWT.
      */
     public AuthResponse login(LoginRequest request) {
-        // Autenticar al usuario
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
 
-        // Buscar el usuario en la base de datos
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new RuntimeException("No se encontró el usuario"));
 
-        // Generar el token JWT
         String token = jwtService.getToken(user);
 
-        // Retornar la respuesta con el token y el rol
         return AuthResponse.builder()
                 .token(token)
-                .role(user.getRole()) // Usar el campo `role` directamente
+                .role(user.getRole())
                 .build();
     }
-
-
-
 
     /**
      * Registra a un nuevo usuario y genera un token JWT.

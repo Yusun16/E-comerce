@@ -8,6 +8,15 @@ import lombok.ToString;
 
 import java.time.LocalDate;
 
+/**
+ * Representa los descuentos en el sistema de ecommerce.
+ * Contiene la información de crear un descuento, en una fecha de inicio,
+ * como tambien, en una fecha de fin. Se evalua si existe un descuento activo
+ * o no.
+ *
+ * @author Roberto Cerquera
+ * @version 1.0
+ */
 @Entity
 @Data
 @NoArgsConstructor

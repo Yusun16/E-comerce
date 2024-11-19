@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  *
  * Extiende de {@link JpaRepository} que provee métodos básicos como guardar, eliminar y buscar.
  *
- * @author German Garzon
+ * @author Roberto Cerquera
  * @version 1.0
  */
 @Repository

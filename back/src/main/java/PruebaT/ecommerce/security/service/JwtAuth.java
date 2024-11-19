@@ -24,7 +24,7 @@ import java.io.IOException;
  * Utiliza {@link JwtService} para manejar los tokens JWT.
  * Utiliza {@link UserDetailsService} para cargar los detalles del usuario manejo de sesion de spring security.
  *
- * @author German Garzon
+ * @author Roberto Cerquera
  * @version 1.0
  */
 @Component

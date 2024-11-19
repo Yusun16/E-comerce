@@ -17,6 +17,7 @@ import java.util.List;
  * Este controlador expone endpoints para realizar operaciones CRUD sobre productos,
  * incluyendo creación, lectura, actualización y eliminación.
  *
+ * @author Roberto Cerquera
  * @version 1.0
  */
 @RestController
@@ -60,12 +61,12 @@ public class ProductoController {
      */
     @PostMapping("/producto")
     public ProductosDTO agregarProducto(@RequestBody ProductosDTO producto) {
-        // Log para verificar el JSON recibido
+
         logger.info("JSON recibido en el controlador: {}", producto);
 
         var productoGuardado = this.productoService.guardarProducto(producto);
 
-        // Log para verificar el producto guardado
+
         logger.info("Producto guardado en la base de datos: {}", productoGuardado);
 
         return productoGuardado;
@@ -79,12 +80,12 @@ public class ProductoController {
      */
     @PutMapping("/producto")
     public ResponseEntity<ProductosDTO> actualizarProducto(@RequestBody ProductosDTO producto) {
-        // Log para verificar el JSON recibido
+
         logger.info("JSON recibido para actualización: {}", producto);
 
         ProductosDTO productoActualizado = productoService.actualizarProducto(producto);
 
-        // Log para verificar el producto actualizado
+
         logger.info("Producto actualizado en la base de datos: {}", productoActualizado);
 
         return ResponseEntity.ok(productoActualizado);

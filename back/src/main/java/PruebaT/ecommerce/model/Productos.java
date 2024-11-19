@@ -10,9 +10,9 @@ import lombok.ToString;
 /**
  * Representa un producto en el sistema de ecommerce.
  * Contiene la información básica sobre un producto, incluyendo nombre,
- * descripción, imagen, stock y precio.
+ * descripción, imagen, stock, categoria y precio.
  *
- * @author Germna Garzon
+ * @author Roberto Cerquera
  * @version 1.0
  */
 

@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Controlador REST para gestionar los detalles de las órdenes.
  *
- * @author German Garzon
+ * @author Roberto Cerquera
  * @version 1.0
  */
 @RestController

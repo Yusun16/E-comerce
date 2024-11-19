@@ -26,7 +26,7 @@ import java.util.function.Function;
  * Utiliza {@link Keys} para generar la clave de firma.
  * Utiliza {@link UserDetails} para obtener los detalles del usuario.
  *
- * @author German Garzon
+ * @author Roberto Cerquera
  * @version 1.0
  */
 @Service
@@ -43,7 +43,6 @@ public class JwtService {
     public String getToken(User user){
         return genereToken(new HashMap<>(),user);
     }
-
 
     /**
      * Genera un token JWT con reclamaciones adicionales.

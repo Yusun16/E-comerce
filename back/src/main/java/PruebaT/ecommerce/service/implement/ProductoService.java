@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  *
  * Utiliza {@link ModelMapper} para convertir entre entidades y DTOs.
  * Utiliza {@link ProductosRepository} para acceder a la informacion y ajsutes del repositorio.
- * @author German Garzon
+ * @author Roberto Cerquera
  * @version 1.0
  */
 @Service
@@ -111,11 +111,24 @@ public class ProductoService implements IProductoService {
         productosRepository.deleteById(id_producto);
     }
 
+    /**
+     * Lista todos los productos por categoría.
+     *
+     * @param categoria la categoria para listar los productos asociados a ella.
+     * @return una lista de productos segun por categoría.
+     */
     @Override
     public List<Productos> findByCategoriaContainingIgnoreCase(String categoria) {
         return productosRepository.findByCategoriaContainingIgnoreCase(categoria);
     }
 
+    /**
+     * Lista todos los productos por precio mínimo y máximo.
+     *
+     * @param precioMin el precio mínimo del producto.
+     * @param precioMax el precio máximo del producto.
+     * @return una lista de productos relacionados en el precio mínimo y máximo.
+     */
     @Override
     public List<Productos> findByPrecioBetween(Double precioMin, Double precioMax) {
         return productosRepository.findByPrecioBetween(precioMin, precioMax);

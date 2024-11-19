@@ -7,11 +7,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './modules/login/login.component';
+import { ReporteComponent } from './modules/reporte/pages/reporte.component';
+import { UsuarioComponent } from './modules/usuario/pages/usuario.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    ReporteComponent,
+    UsuarioComponent,
 
   ],
   imports: [

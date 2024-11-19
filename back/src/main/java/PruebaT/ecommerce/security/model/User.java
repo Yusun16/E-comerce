@@ -23,6 +23,9 @@ import java.util.Collections;
 @Builder
 @Table(name = "users")
 public class User implements UserDetails {
+
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
@@ -36,6 +39,10 @@ public class User implements UserDetails {
     String lastname;
     @Column(name = "email")
     String email;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    Role role;
 
     /**
      * Obtiene las autoridades concedidas al usuario.

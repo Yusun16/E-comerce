@@ -11,4 +11,5 @@ import java.util.List;
 public interface DescuentosRepository  extends JpaRepository<Descuentos, Integer> {
 
     List<Descuentos> findByFechaFinBeforeAndEstadoTrue(LocalDate fecha);
+    List<Descuentos> findByFechaFinAfterAndEstadoTrue(LocalDate fecha);
 }

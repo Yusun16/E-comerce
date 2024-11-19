@@ -1,5 +1,6 @@
 package PruebaT.ecommerce.security.dto;
 
+import PruebaT.ecommerce.security.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,4 +12,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthResponse {
     String token;
+    Role role;
 }

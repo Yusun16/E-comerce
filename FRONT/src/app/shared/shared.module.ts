@@ -12,7 +12,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog/confirm-delete-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SidenavAdminComponent } from './components/sidenav-admin/sidenav-admin.component';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     ImgBrokenDirective,
@@ -32,6 +34,11 @@ import { SidenavAdminComponent } from './components/sidenav-admin/sidenav-admin.
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
   ],
   exports: [
     SidenavComponent,
@@ -39,6 +46,7 @@ import { SidenavAdminComponent } from './components/sidenav-admin/sidenav-admin.
     TableOrderComponent,
     TableDetalleOrderComponent,
     SidebarComponent,
+    SidenavAdminComponent
   ]
 })
 export class SharedModule { }

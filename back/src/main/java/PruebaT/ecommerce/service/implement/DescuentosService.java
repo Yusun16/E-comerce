@@ -31,13 +31,19 @@ public class DescuentosService implements IDescuentosService {
     }
 
     @Override
-    public DescuentosDTO guardarDescuento(DescuentosDTO descuentos) {
-        var descuentoGuardado = this.descuentosRepository.save(modelMapper.map(descuentos, Descuentos.class));
-        return modelMapper.map(descuentoGuardado, DescuentosDTO.class);
+    public Descuentos guardarDescuento(Descuentos descuentos) {
+
+        return descuentosRepository.save(modelMapper.map(descuentos, Descuentos.class));
+    }
+
+    @Override
+    public List<Descuentos> obtenerDescuentosActivos() {
+        LocalDate fechaActual = LocalDate.now();
+        return descuentosRepository.findByFechaFinAfterAndEstadoTrue(fechaActual);
     }
 
     //Cronometro en un periodo de tiempo(30 minutes)
-    @Scheduled(cron = "0 0/30 * * * ?")
+    @Scheduled(cron = "*/10 * * * * ?")
     public void verificarDescuentosExpirados() {
         // Obtener la fecha en la que se activo
         LocalDate fechaActual = LocalDate.now();

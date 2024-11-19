@@ -43,15 +43,27 @@ public class AuthService {
      * @param request el objeto LoginRequest que contiene las credenciales del usuario.
      * @return un AuthResponse con el token JWT.
      */
-    public AuthResponse login(LoginRequest request){
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        UserDetails user= (UserDetails) userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new RuntimeException("No se encontró el usuario"));
+    public AuthResponse login(LoginRequest request) {
+        // Autenticar al usuario
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+        );
 
-        String token=jwtService.getToken((User) user);
+        // Buscar el usuario en la base de datos
+        User user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new RuntimeException("No se encontró el usuario"));
+
+        // Generar el token JWT
+        String token = jwtService.getToken(user);
+
+        // Retornar la respuesta con el token y el rol
         return AuthResponse.builder()
                 .token(token)
+                .role(user.getRole()) // Usar el campo `role` directamente
                 .build();
     }
+
+
 
 
     /**
@@ -71,6 +83,7 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
-        return AuthResponse.builder().token(jwtService.getToken(user)).build();
+        return AuthResponse.builder().token(jwtService.getToken(user)).
+                role(user.getRole()).build();
     }
 }

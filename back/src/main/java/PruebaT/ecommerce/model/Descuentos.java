@@ -26,6 +26,7 @@ public class Descuentos {
     @Column(name = "fecha_fin")
     private LocalDate fechaFin;
 
-    @Column(name = "estado")
-    private Boolean estado;
+    @Column(name = "estado", nullable = false, columnDefinition = "boolean default true")
+    private Boolean estado = true;
+
 }

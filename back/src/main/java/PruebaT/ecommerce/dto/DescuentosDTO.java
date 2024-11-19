@@ -1,10 +1,11 @@
 package PruebaT.ecommerce.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class DescuentosDTO {
     private Integer id;
-    private Date fechaInicio;
-    private Date fechaFin;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
     private Boolean estado;
 }

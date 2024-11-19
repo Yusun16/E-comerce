@@ -26,7 +26,7 @@ import java.util.Optional;
  * Utiliza {@link PasswordEncoder} para acceder a los servicios de encriptacion de comparacion de contraseña.
  * Utiliza {@link AuthenticationManager} para acceder a los servicios de manejo de sesion de spring security.
  *
- * @author German Garzon
+ * @author Roberto Cerquera
  * @version 1.0
  */
 @Service
@@ -45,26 +45,22 @@ public class AuthService {
      * @return un AuthResponse con el token JWT.
      */
     public AuthResponse login(LoginRequest request) {
-        // Autenticar al usuario
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
 
-        // Buscar el usuario en la base de datos
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new RuntimeException("No se encontró el usuario"));
 
-        // Generar el token JWT
         String token = jwtService.getToken(user);
 
-        // Retornar la respuesta con el token y el rol
         return AuthResponse.builder()
                 .token(token)
-                .role(user.getRole()) // Usar el campo `role` directamente
+                .role(user.getRole())
                 .frecuencia(user.getFrecuencia())
                 .build();
     }
-
 
     /**
      * Registra a un nuevo usuario y genera un token JWT.
@@ -127,19 +123,16 @@ public class AuthService {
      * @param id el ID del usuario a eliminar
      */
     public void delete(Integer id) {
-        // Buscar el usuario por ID
+
         Optional<User> existingUserOpt = userRepository.findById(id);
 
         if (existingUserOpt.isEmpty()) {
             throw new RuntimeException("Usuario no encontrado con ID: " + id);
         }
 
-        // Obtener el usuario existente y cambiar su estado
         User existingUser = existingUserOpt.get();
-        existingUser.setEstado(false); // Asumiendo que tienes un campo 'estado' para el borrado lógico
+        existingUser.setEstado(false);
 
-        // Guardar el usuario actualizado
         userRepository.save(existingUser);
     }
-
 }

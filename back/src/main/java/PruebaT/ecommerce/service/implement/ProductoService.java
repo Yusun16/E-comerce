@@ -54,10 +54,6 @@ public class ProductoService implements IProductoService {
     @Override
     public List<ProductosDTO> findByNombreContainingIgnoreCase(String producto) {
         List<Productos> productos = this.productosRepository.findByNombreContainingIgnoreCase(producto);
-
-//        if (productos.isEmpty()) {
-//            throw new RecursoNoEncontradoException("Producto no encontrado");
-//        }
        return productos.stream()
                .map(productoEntity -> this.modelMapper.map(productoEntity, ProductosDTO.class))
                .collect(Collectors.toList());

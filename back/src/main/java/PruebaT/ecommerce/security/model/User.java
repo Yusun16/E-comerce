@@ -12,7 +12,7 @@ import java.util.Collections;
 /**
  * Entidad que representa a un usuario en el sistema de seguridad.
  *
- * @author German Garzon
+ * @author Roberto Cerquera
  * @version 1.0
  */
 

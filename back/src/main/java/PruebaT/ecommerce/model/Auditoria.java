@@ -6,6 +6,14 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+/**
+ * Representa la auditoria en el sistema de ecommerce.
+ * Contiene la información de un control,
+ * de todas las ordenes, descuentos y más.
+ *
+ * @author Roberto Cerquera
+ * @version 1.0
+ */
 @Data
 @NoArgsConstructor
 @MappedSuperclass
@@ -35,6 +43,6 @@ public abstract class Auditoria {
     @PrePersist
     protected void onCreate() {
         this.fechaRegistro = new Date();
-        this.estado = true; // Por defecto, el registro estará activo
+        this.estado = true;
     }
 }

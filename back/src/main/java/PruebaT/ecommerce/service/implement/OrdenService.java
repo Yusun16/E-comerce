@@ -122,25 +122,22 @@ public class OrdenService implements IOrdenService {
                 detalle.setSubtotal(subtotal);
             }
 
-            // Obtener el ID del usuario desde el token
             Integer userId = getUserIdFromToken();
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuario no encontrado"));
 
-            // Incrementar la frecuencia del usuario
             if (user.getFrecuencia() == null) {
-                user.setFrecuencia(1); // Inicializar si es nulo
+                user.setFrecuencia(1);
             } else {
-                user.setFrecuencia(user.getFrecuencia() + 1); // Incrementar en 1
+                user.setFrecuencia(user.getFrecuencia() + 1);
             }
-            userRepository.save(user); // Guardar los cambios en la base de datos
+            userRepository.save(user);
 
             Ordenes ordenes = new Ordenes();
             ordenes.setFecha(new Date());
             ordenes.setTotal(total);
-            ordenes.setUser(user); // Asignar el usuario a la orden
+            ordenes.setUser(user);
 
-            // Guardar la orden en la base de datos
             ordenes = ordenesRepository.save(ordenes);
 
             for (DetalleOrdenDTO detalleOrdenDTO : detalleOrden) {
@@ -163,13 +160,11 @@ public class OrdenService implements IOrdenService {
         var orden = ordenesRepository.findById(id_orden)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Orden no encontrada"));
 
-        // Restaurar el stock de los productos
         for (DetalleOrden detalleOrden : orden.getDetalles()) {
             Productos producto = detalleOrden.getProducto();
             producto.setStock(producto.getStock() + detalleOrden.getCantidad());
             productosRepository.save(producto);
         }
-        // Eliminar la orden
         ordenesRepository.delete(orden);
     }
 
@@ -188,7 +183,7 @@ public class OrdenService implements IOrdenService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof User) {
             User user = (User) authentication.getPrincipal();
-            return user.getId(); // Obtiene el ID del usuario autenticado
+            return user.getId();
         }
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuario no autorizado");
     }

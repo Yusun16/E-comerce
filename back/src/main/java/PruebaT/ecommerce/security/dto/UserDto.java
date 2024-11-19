@@ -6,4 +6,5 @@ public interface UserDto {
      String getLastname();
      String getEmail();
      String getRole();
+     Integer getId();
 }

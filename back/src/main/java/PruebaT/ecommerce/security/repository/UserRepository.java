@@ -32,7 +32,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT u FROM User u ORDER BY u.frecuencia DESC")
     List<User> findTop5ByOrderByFrecuenciaDesc();
 
-    @Query(value = "select username, firstname, lastname, email, role from users", nativeQuery = true)
+    @Query(value = "select id, username, firstname, lastname, email, role from users", nativeQuery = true)
     List<UserDto> consultUsers();
 
 }

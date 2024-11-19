@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService } from '../service/usuario.service';
 
+export interface ApiResponse {
+  message: string;
+  id?: number; // Opcional, si se devuelve el ID
+}
+
 @Component({
   selector: 'app-usuario',
   templateUrl: './usuario.component.html',
@@ -12,17 +17,19 @@ export class UsuarioComponent implements OnInit {
   roles = ['admin', 'comprador'];
   successMessage = '';
   errorMessage = '';
+  isEditMode = false; // Indica si estamos en modo de edición
+  currentUserId: number | null = null; // ID del usuario a editar
 
-  usuarios: any[] = [];
+  usuarios: any[] = []; // Lista de usuarios
 
   constructor(private fb: FormBuilder, private usuarioService: UsuarioService) {
     this.userForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      lastname: ['', Validators.required],
       firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       role: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
@@ -30,36 +37,112 @@ export class UsuarioComponent implements OnInit {
     this.getUsuarios();
   }
 
-  onSubmit() {
-    if (this.userForm.valid) {
-      this.usuarioService.registerUser(this.userForm.value).subscribe({
-        next: (response) => {
-          this.successMessage = 'Usuario registrado exitosamente';
-          this.errorMessage = '';
-          this.userForm.reset();
-          this.getUsuarios();
-        },
-        error: () => {
-          this.errorMessage = 'Error al registrar usuario. Intente nuevamente.';
-          this.successMessage = '';
-        },
-      });
-    } else {
-      this.errorMessage =
-        'Formulario inválido. Por favor, complete los campos correctamente.';
-      this.successMessage = '';
-    }
-  }
-
   getUsuarios() {
     this.usuarioService.getUsers().subscribe({
       next: (data) => {
-        this.usuarios = data.map(({ password, ...rest }) => rest);
+        this.usuarios = data;
         this.errorMessage = '';
       },
-      error: () => {
-        this.errorMessage = 'Error al cargar los usuarios.';
+      error: (err) => {
+        this.errorMessage = `Error al cargar los usuarios: ${err.message}`;
       },
     });
   }
+
+  onSubmit() {
+    if (this.userForm.valid) {
+      const userData = this.userForm.value;
+  
+      if (this.isEditMode) {
+        // Actualizar usuario
+        this.usuarioService.updateUser(this.currentUserId!, userData).subscribe({
+          next: (response) => {
+            console.log('Respuesta completa del servidor:', response); // Depuración
+            if (response && response.token) {
+              this.successMessage = 'Usuario actualizado correctamente';
+              this.errorMessage = '';
+              this.isEditMode = false;
+              this.currentUserId = null;
+              this.userForm.reset();
+              this.getUsuarios(); // Refrescar la lista de usuarios
+              alert('¡Usuario actualizado exitosamente!');
+            } else {
+              this.errorMessage = 'Error inesperado al actualizar el usuario.';
+              alert('Error inesperado al actualizar el usuario.');
+            }
+          },
+          error: (err) => {
+            console.error('Error:', err); // Para depurar
+            this.errorMessage = err?.error?.message || 'Error desconocido al actualizar el usuario.';
+            this.successMessage = '';
+            alert('Ocurrió un error al actualizar el usuario.');
+          },
+        });
+      } else {
+        // Crear nuevo usuario
+        this.usuarioService.registerUser(userData).subscribe({
+          next: (response) => {
+            console.log('Respuesta completa del servidor:', response); // Depuración
+            if (response && response.token) {
+              this.successMessage = 'Usuario creado correctamente';
+              this.errorMessage = '';
+              this.userForm.reset();
+              this.getUsuarios(); // Refrescar la lista de usuarios
+              alert('¡Usuario creado exitosamente!');
+            } else {
+              this.errorMessage = 'Error inesperado al crear el usuario.';
+              alert('Error inesperado al crear el usuario.');
+            }
+          },
+          error: (err) => {
+            console.error('Error:', err); // Para depurar
+            this.errorMessage = err?.error?.message || 'Error desconocido al crear el usuario.';
+            this.successMessage = '';
+            alert('Ocurrió un error al crear el usuario.');
+          },
+        });
+      }
+    } else {
+      this.errorMessage = 'Formulario inválido. Por favor, complete los campos correctamente.';
+      this.successMessage = '';
+      alert('Por favor, complete los campos correctamente.');
+    }
+  }
+  
+  editUser(user: any) {
+    this.isEditMode = true;
+    this.currentUserId = user.id;
+    this.userForm.patchValue({
+      username: user.username,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+      role: user.role,
+    });
+  }
+  deleteUser(id: number) {
+    if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+      this.usuarioService.deleteUser(id).subscribe({
+        next: (response: ApiResponse) => {
+          console.log('Respuesta del servidor:', response); // Depuración
+          if (response.message === 'Usuario eliminado exitosamente') {
+            this.successMessage = response.message;
+            this.errorMessage = '';
+            this.getUsuarios(); // Refrescar la lista de usuarios
+            alert('¡Usuario eliminado exitosamente!');
+          } else {
+            this.errorMessage = 'Error inesperado al eliminar el usuario.';
+            alert('Error inesperado al eliminar el usuario.');
+          }
+        },
+        error: (err: any) => {
+          console.error('Error en la solicitud:', err); // Depuración
+          this.errorMessage = err?.error?.message || 'Error desconocido al eliminar el usuario.';
+          this.successMessage = '';
+          alert('Ocurrió un error al eliminar el usuario.');
+        },
+      });
+    }
+  }
+
 }

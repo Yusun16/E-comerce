@@ -32,4 +32,5 @@ export class DescuentoService {
     const descuentoConEstado = { ...descuento, estado: true };
     return this.http.post<Descuento>(`${this.apiUrl}s`, descuentoConEstado, { headers });
   }
+
 }

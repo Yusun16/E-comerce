@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -65,8 +66,6 @@ public class AuthService {
     }
 
 
-
-
     /**
      * Registra a un nuevo usuario y genera un token JWT.
      *
@@ -91,6 +90,56 @@ public class AuthService {
 
     public List<UserDto> consultUsers(){
         return userRepository.consultUsers();
+    }
+
+    /**
+     * Actualiza un usuario existente basado en el ID proporcionado.
+     *
+     * @param id   el ID del usuario a actualizar
+     * @param user los datos actualizados del usuario
+     */
+    public void update(Integer id, User user) {
+        Optional<User> existingUserOpt = userRepository.findById(id);
+
+        if (existingUserOpt.isEmpty()) {
+            throw new RuntimeException("Usuario no encontrado con ID: " + id);
+        }
+
+        User existingUser = existingUserOpt.get();
+
+        existingUser.setUsername(user.getUsername());
+        existingUser.setFirstname(user.getFirstname());
+        existingUser.setLastname(user.getLastname());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setRole(user.getRole());
+        existingUser.setFrecuencia(user.getFrecuencia());
+
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+        userRepository.save(existingUser);
+    }
+
+    /**
+     * Realiza el borrado lógico de un usuario.
+     *
+     * @param id el ID del usuario a eliminar
+     */
+    public void delete(Integer id) {
+        // Buscar el usuario por ID
+        Optional<User> existingUserOpt = userRepository.findById(id);
+
+        if (existingUserOpt.isEmpty()) {
+            throw new RuntimeException("Usuario no encontrado con ID: " + id);
+        }
+
+        // Obtener el usuario existente y cambiar su estado
+        User existingUser = existingUserOpt.get();
+        existingUser.setEstado(false); // Asumiendo que tienes un campo 'estado' para el borrado lógico
+
+        // Guardar el usuario actualizado
+        userRepository.save(existingUser);
     }
 
 }

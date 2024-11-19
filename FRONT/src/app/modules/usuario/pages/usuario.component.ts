@@ -4,7 +4,7 @@ import { UsuarioService } from '../service/usuario.service';
 
 export interface ApiResponse {
   message: string;
-  id?: number; // Opcional, si se devuelve el ID
+  id?: number;
 }
 
 @Component({
@@ -17,10 +17,10 @@ export class UsuarioComponent implements OnInit {
   roles = ['admin', 'comprador'];
   successMessage = '';
   errorMessage = '';
-  isEditMode = false; // Indica si estamos en modo de edición
-  currentUserId: number | null = null; // ID del usuario a editar
+  isEditMode = false; 
+  currentUserId: number | null = null; 
 
-  usuarios: any[] = []; // Lista de usuarios
+  usuarios: any[] = [];
 
   constructor(private fb: FormBuilder, private usuarioService: UsuarioService) {
     this.userForm = this.fb.group({
@@ -54,17 +54,16 @@ export class UsuarioComponent implements OnInit {
       const userData = this.userForm.value;
   
       if (this.isEditMode) {
-        // Actualizar usuario
         this.usuarioService.updateUser(this.currentUserId!, userData).subscribe({
           next: (response) => {
-            console.log('Respuesta completa del servidor:', response); // Depuración
+            console.log('Respuesta completa del servidor:', response); 
             if (response && response.token) {
               this.successMessage = 'Usuario actualizado correctamente';
               this.errorMessage = '';
               this.isEditMode = false;
               this.currentUserId = null;
               this.userForm.reset();
-              this.getUsuarios(); // Refrescar la lista de usuarios
+              this.getUsuarios(); 
               alert('¡Usuario actualizado exitosamente!');
             } else {
               this.errorMessage = 'Error inesperado al actualizar el usuario.';
@@ -72,7 +71,7 @@ export class UsuarioComponent implements OnInit {
             }
           },
           error: (err) => {
-            console.error('Error:', err); // Para depurar
+            console.error('Error:', err); 
             this.errorMessage = err?.error?.message || 'Error desconocido al actualizar el usuario.';
             this.successMessage = '';
             alert('Ocurrió un error al actualizar el usuario.');
@@ -82,12 +81,12 @@ export class UsuarioComponent implements OnInit {
         // Crear nuevo usuario
         this.usuarioService.registerUser(userData).subscribe({
           next: (response) => {
-            console.log('Respuesta completa del servidor:', response); // Depuración
+            console.log('Respuesta completa del servidor:', response); 
             if (response && response.token) {
               this.successMessage = 'Usuario creado correctamente';
               this.errorMessage = '';
               this.userForm.reset();
-              this.getUsuarios(); // Refrescar la lista de usuarios
+              this.getUsuarios(); 
               alert('¡Usuario creado exitosamente!');
             } else {
               this.errorMessage = 'Error inesperado al crear el usuario.';
@@ -95,7 +94,7 @@ export class UsuarioComponent implements OnInit {
             }
           },
           error: (err) => {
-            console.error('Error:', err); // Para depurar
+            console.error('Error:', err);  
             this.errorMessage = err?.error?.message || 'Error desconocido al crear el usuario.';
             this.successMessage = '';
             alert('Ocurrió un error al crear el usuario.');
@@ -124,11 +123,11 @@ export class UsuarioComponent implements OnInit {
     if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
       this.usuarioService.deleteUser(id).subscribe({
         next: (response: ApiResponse) => {
-          console.log('Respuesta del servidor:', response); // Depuración
+          console.log('Respuesta del servidor:', response);  
           if (response.message === 'Usuario eliminado exitosamente') {
             this.successMessage = response.message;
             this.errorMessage = '';
-            this.getUsuarios(); // Refrescar la lista de usuarios
+            this.getUsuarios(); 
             alert('¡Usuario eliminado exitosamente!');
           } else {
             this.errorMessage = 'Error inesperado al eliminar el usuario.';
@@ -136,7 +135,7 @@ export class UsuarioComponent implements OnInit {
           }
         },
         error: (err: any) => {
-          console.error('Error en la solicitud:', err); // Depuración
+          console.error('Error en la solicitud:', err);  
           this.errorMessage = err?.error?.message || 'Error desconocido al eliminar el usuario.';
           this.successMessage = '';
           alert('Ocurrió un error al eliminar el usuario.');

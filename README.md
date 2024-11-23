@@ -15,16 +15,17 @@ Este proyecto es una plataforma de comercio electrónico desarrollada para ofrec
 
 La estructura del repositorio está organizada de la siguiente manera:
 
-plaintext
-├── src/                 # Código fuente principal
-│   ├── components/      # Componentes reutilizables
-│   ├── pages/           # Páginas principales del sitio
-│   ├── services/        # Conexiones API y lógica de negocio
-│   ├── styles/          # Archivos de estilos (CSS/SCSS)
-│   └── utils/           # Funciones auxiliares
-├── public/              # Recursos públicos (imágenes, favicon, etc.)
-├── package.json         # Dependencias y scripts del proyecto
-└── README.md            # Documentación del proyecto
+```plaintext
+src/                 # Código fuente principal
+├── components/      # Componentes reutilizables
+├── pages/           # Páginas principales del sitio
+├── services/        # Conexiones API y lógica de negocio
+├── styles/          # Archivos de estilos (CSS/SCSS)
+├── utils/           # Funciones auxiliares
+public/              # Recursos públicos (imágenes, favicon, etc.)
+package.json         # Dependencias y scripts del proyecto
+README.md            # Documentación del proyecto
+```
 
 
 

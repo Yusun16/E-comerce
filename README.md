@@ -25,6 +25,9 @@ plaintext
 ├── public/              # Recursos públicos (imágenes, favicon, etc.)
 ├── package.json         # Dependencias y scripts del proyecto
 └── README.md            # Documentación del proyecto
+
+
+
 Tecnologías utilizadas
 Frontend: React, HTML, CSS, JavaScript
 Backend: (Describe si utilizas algún framework/backend específico, como Node.js, Spring Boot, etc.)

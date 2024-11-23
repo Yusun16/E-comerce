@@ -106,7 +106,7 @@ Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más 
 Para cualquier consulta, sugerencia o contribución, puedes contactarme a través de:
 
 GitHub: Yusun16
-Email: (tu correo electrónico, si deseas incluirlo)
+Email: yusunguairabryan@gmail.com
 ¡Gracias por visitar este repositorio! 🎉
 
 markdown

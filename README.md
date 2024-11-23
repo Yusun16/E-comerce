@@ -54,7 +54,7 @@ npm start
 Configura las variables de entorno necesarias (si aplica) en un archivo .env.
 
 🧑‍💻 Gestión de usuarios: Creación de usuario
-📥 Endpoint: Crear usuario
+```📥 Endpoint: Crear usuario
 URL: /api/usuarios/crear
 Método: POST
 Descripción: Este endpoint permite registrar un nuevo usuario en la plataforma.
@@ -74,7 +74,7 @@ Copiar código
     "token": "string"
 }
 Para más detalles, consulta la documentación completa de la API en Documentación Postman.
-
+```
 📄 Scripts disponibles
 npm start: Inicia el servidor de desarrollo.
 npm build: Construye la aplicación para producción.

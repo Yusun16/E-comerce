@@ -108,6 +108,3 @@ Para cualquier consulta, sugerencia o contribución, puedes contactarme a travé
 GitHub: Yusun16
 Email: yusunguairabryan@gmail.com
 ¡Gracias por visitar este repositorio! 🎉
-
-markdown
-Copiar código
